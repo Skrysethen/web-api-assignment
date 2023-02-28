@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using web_api_assignment.Models;
+using web_api_assignment.Models.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
