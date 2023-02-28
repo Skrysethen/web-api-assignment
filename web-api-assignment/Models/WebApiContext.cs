@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using web_api_assignment.Models;
 
 namespace web_api_assignment.Models
 {
@@ -13,6 +14,8 @@ namespace web_api_assignment.Models
         public WebApiContext(DbContextOptions<WebApiContext> options) : base(options) 
         {
         }
+
+        public DbSet<Character> Character { get; set; } = null!;
 
     }
 }

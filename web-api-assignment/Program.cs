@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen( options =>
     {
         Version = "v1",
         Title = "Muuuvie API",
-        Description = "Simple API to manage postgraduate studies",
+        Description = "Simple API to manage movie characters in different movies and franchises",
         Contact = new OpenApiContact
         {
             Name = "Håvard Lund, Erik Skryseth",
@@ -40,7 +40,8 @@ builder.Services.AddDbContext<WebApiContext>(
         )
     );
 
-
+// Add automapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
