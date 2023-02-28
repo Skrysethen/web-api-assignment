@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace web_api_assignment.Models
+namespace web_api_assignment.Models.Entities
 {
     [Table("Franchise")]
     public class Franchise
