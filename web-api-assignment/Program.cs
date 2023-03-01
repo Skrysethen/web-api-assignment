@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using web_api_assignment.Models.Entities;
+using web_api_assignment.Services.Franchises;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,7 @@ builder.Services.AddDbContext<WebApiContext>(
         )
     );
 
+builder.Services.AddScoped<IFranchiseService, IFranchiseService>();
 
 var app = builder.Build();
 
