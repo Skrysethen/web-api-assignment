@@ -4,7 +4,7 @@ using System.Reflection;
 using web_api_assignment.Models.Entities;
 using web_api_assignment.Services.Franchises;
 using web_api_assignment.Services.Characters;
-
+using web_api_assignment.Services.Movies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,11 +44,9 @@ builder.Services.AddDbContext<WebApiContext>(
     );
 
 
-
-builder.Services.AddScoped<IFranchiseService, IFranchiseService>();
+builder.Services.AddScoped<IFranchiseService, FranchiseServiceImpl>();
 builder.Services.AddTransient<ICharacterService, CharacterServiceImpl>();
-
-builder.Services.AddScoped<IFranchiseService, IFranchiseService>();
+builder.Services.AddScoped<IMovieService, MovieServiceImpl>();
 
 // Add automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
