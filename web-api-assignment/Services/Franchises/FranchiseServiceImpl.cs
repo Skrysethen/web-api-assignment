@@ -12,7 +12,7 @@ namespace web_api_assignment.Services.Franchises
             _webApiContext = context;
         }
 
-        public async Task<ICollection<Franchise>> GetAllAsync()
+        public async Task<IEnumerable<Franchise>> GetAllAsync()
         {
             return await _webApiContext.Franchises.ToListAsync();
         }
