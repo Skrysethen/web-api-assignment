@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using web_api_assignment.Models.Entities;
+using web_api_assignment.Services.Franchises;
 
 namespace web_api_assignment.Controllers
 {
@@ -14,10 +15,11 @@ namespace web_api_assignment.Controllers
     public class FranchisesController : ControllerBase
     {
         private readonly WebApiContext _context;
+        private readonly IFranchiseService _franchiseService;
 
-        public FranchisesController(WebApiContext context)
+        public FranchisesController(IFranchiseService franchiseService)
         {
-            _context = context;
+            _franchiseService = franchiseService;
         }
 
         // GET: api/Franchises
