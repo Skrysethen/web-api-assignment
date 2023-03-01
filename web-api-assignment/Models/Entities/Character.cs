@@ -15,5 +15,6 @@ namespace web_api_assignment.Models.Entities
         public string? PictureUrl { get; set; }
 
         public ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
+        
     }
 }

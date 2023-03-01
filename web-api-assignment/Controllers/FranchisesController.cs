@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using web_api_assignment.Models.Entities;
+using web_api_assignment.Services.Franchises;
+using web_api_assignment.Utils;
 
 namespace web_api_assignment.Controllers
 {
@@ -13,32 +16,32 @@ namespace web_api_assignment.Controllers
     [ApiController]
     public class FranchisesController : ControllerBase
     {
-        private readonly WebApiContext _context;
+        private readonly IFranchiseService _franchiseService;
 
-        public FranchisesController(WebApiContext context)
+        public FranchisesController(IFranchiseService franchiseService)
         {
-            _context = context;
+            _franchiseService = franchiseService;
         }
 
         // GET: api/Franchises
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchise()
+        public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
         {
-            return await _context.Franchise.ToListAsync();
+            return Ok(await _franchiseService.GetAllAsync());
         }
 
         // GET: api/Franchises/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Franchise>> GetFranchise(int id)
         {
-            var franchise = await _context.Franchise.FindAsync(id);
-
-            if (franchise == null)
+            try
             {
-                return NotFound();
+                return Ok(await _franchiseService.GetByIdAsync(id));
             }
-
-            return franchise;
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+            }
         }
 
         // PUT: api/Franchises/5
@@ -51,25 +54,16 @@ namespace web_api_assignment.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(franchise).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FranchiseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                await _franchiseService.UpdateAsync(franchise);
+                return NoContent();
 
-            return NoContent();
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+            }
         }
 
         // POST: api/Franchises
@@ -77,9 +71,7 @@ namespace web_api_assignment.Controllers
         [HttpPost]
         public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
         {
-            _context.Franchise.Add(franchise);
-            await _context.SaveChangesAsync();
-
+            await _franchiseService.AddAsync(franchise);
             return CreatedAtAction("GetFranchise", new { id = franchise.Id }, franchise);
         }
 
@@ -87,21 +79,43 @@ namespace web_api_assignment.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
-            var franchise = await _context.Franchise.FindAsync(id);
-            if (franchise == null)
+            try
             {
-                return NotFound();
+                await _franchiseService.DeleteByIdAsync(id);
+                return NoContent();
             }
-
-            _context.Franchise.Remove(franchise);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+            }
         }
 
-        private bool FranchiseExists(int id)
+        [HttpGet("{id}/movies")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesForFranchiseAsync(int id)
         {
-            return _context.Franchise.Any(e => e.Id == id);
+            try
+            {
+                return Ok(await _franchiseService.GetMoviesAsync(id));
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+            }
         }
+
+        [HttpPut("{id}/movies")]
+        public async Task<IActionResult> UpdateMoviesForFranchisesAsync(int[] movieIds, int id)
+        {
+            try
+            {
+                await _franchiseService.UpdateMoviesAsync(movieIds, id);
+                return NoContent();
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+            }
+        }
+
     }
 }

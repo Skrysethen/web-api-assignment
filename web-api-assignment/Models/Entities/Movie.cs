@@ -21,6 +21,6 @@ namespace web_api_assignment.Models.Entities
         public Franchise Franchise { get; set; } = null!;
 
 
-        //public ICollection<Character> Characters { get; set; } = null!;
+        public ICollection<Character> Characters { get; set; } = null!;
     }
 }

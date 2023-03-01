@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using web_api_assignment.Models;
+using web_api_assignment.Models.Entities;
+using web_api_assignment.Services.Characters;
 
 namespace web_api_assignment.Controllers
 {
@@ -15,24 +16,25 @@ namespace web_api_assignment.Controllers
     public class CharactersController : ControllerBase
     {
         private readonly WebApiContext _context;
+        private readonly ICharacterService _characterService;
 
-        public CharactersController(WebApiContext context)
+        public CharactersController(ICharacterService characterService)
         {
-            _context = context;
+            _characterService = characterService;
         }
 
         // GET: api/Characters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharacter()
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-            return await _context.Character.ToListAsync();
+            return Ok(await _characterService.GetAllAsync());
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Character>> GetCharacter(int id)
         {
-            var character = await _context.Character.FindAsync(id);
+            var character = await _characterService.GetByIdAsync(id);
 
             if (character == null)
             {
@@ -52,23 +54,7 @@ namespace web_api_assignment.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(character).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CharacterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _characterService.UpdateAsync(character);
 
             return NoContent();
         }
@@ -78,31 +64,10 @@ namespace web_api_assignment.Controllers
         [HttpPost]
         public async Task<ActionResult<Character>> PostCharacter(Character character)
         {
-            _context.Character.Add(character);
-            await _context.SaveChangesAsync();
+            await _characterService.AddAsync(character);
 
             return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
         }
 
-        // DELETE: api/Characters/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCharacter(int id)
-        {
-            var character = await _context.Character.FindAsync(id);
-            if (character == null)
-            {
-                return NotFound();
-            }
-
-            _context.Character.Remove(character);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CharacterExists(int id)
-        {
-            return _context.Character.Any(e => e.Id == id);
-        }
     }
 }

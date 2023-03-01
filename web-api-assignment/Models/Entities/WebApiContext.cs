@@ -14,9 +14,10 @@ namespace web_api_assignment.Models.Entities
         public WebApiContext(DbContextOptions<WebApiContext> options) : base(options)
         {
         }
-        public DbSet<Franchise> Franchise { get; set; }
+        public virtual DbSet<Franchise> Franchises { get; set; }
+        public virtual DbSet<Movie> Movies { get; set; }
 
-        public DbSet<Character> Character { get; set; } = null!;
+        public DbSet<Character> Characters { get; set; } = null!;
 
     }
 }
