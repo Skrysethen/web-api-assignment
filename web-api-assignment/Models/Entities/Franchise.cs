@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace web_api_assignment.Models.Entities
 {
     [Table("Franchise")]
-    public class Franchise
+    public partial class Franchise
     {
         public int Id { get; set; }
         [MaxLength(50)]
