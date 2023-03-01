@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using web_api_assignment.Models;
 
 namespace web_api_assignment.Models.Entities
 {
@@ -15,6 +16,8 @@ namespace web_api_assignment.Models.Entities
         }
         public virtual DbSet<Franchise> Franchises { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
+
+        public DbSet<Character> Character { get; set; } = null!;
 
     }
 }
