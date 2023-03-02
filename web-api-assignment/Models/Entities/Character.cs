@@ -14,7 +14,7 @@ namespace web_api_assignment.Models.Entities
         [MaxLength(200)]
         public string? PictureUrl { get; set; }
 
-        public ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
+        public virtual ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
         
     }
 }
