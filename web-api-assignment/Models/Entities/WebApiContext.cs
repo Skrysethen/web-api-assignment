@@ -35,14 +35,16 @@ namespace web_api_assignment.Models.Entities
             builder.Entity<Character>().HasData(
                 new Character() { Id = 1, FullName = "Robin the sidekick", Alias = "The kid next to batman", Gender = "m"},
                 new Character() {  Id = 2, FullName = "Gandalf", Alias = "The gray", Gender = "m"},
-                new Character() { Id = 3, FullName = "Hermine", Gender = "f" }
+                new Character() { Id = 3, FullName = "Hermine", Gender = "f" },
+                new Character() { Id = 4, FullName = "Batman", Alias = "Bruce Wayne", Gender = "m"}
                 );
 
             //Movies
             builder.Entity<Movie>().HasData(
                 new Movie() { Id = 1, MovieTitle = "Harry Potter and the philosopherstone", Director = "Superman", Genre = "Fantasy" },
                 new Movie() { Id = 2, MovieTitle = "Lord of the rings 3", Director = "Some dude", Genre = "Fantasy" },
-                new Movie() { Id = 3, MovieTitle = "Batman the dark knight", Director ="who knows", Genre = "Superhero"}
+                new Movie() { Id = 3, MovieTitle = "Batman the dark knight", Director = "Christopher Nolan", Genre = "Superhero"},
+                new Movie() {  Id = 4, FranchiseId = 1, MovieTitle = "Batman begins", Director ="Christopher Nolan", Genre = "Superhero"}
                 );
 
 
@@ -58,7 +60,8 @@ namespace web_api_assignment.Models.Entities
                         new { MoviesId = 3, CharactersId = 1 },
                         new { MoviesId = 1, CharactersId = 2 },
                         new { MoviesId = 1, CharactersId = 3 },
-                        new { MoviesId = 3, CharactersId = 3 }
+                        new { MoviesId = 3, CharactersId = 3 },
+                        new { MoviesId = 4, CharactersId = 4 }
                     )
                  );
         }
