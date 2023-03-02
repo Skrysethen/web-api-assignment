@@ -3,7 +3,7 @@ using web_api_assignment.Models.Entities;
 
 namespace web_api_assignment.Models.DTOS.Movies
 {
-    public class MovieDTO
+    public class MovieDto
     {
         public int Id { get; set; }
         [MaxLength(50)]
