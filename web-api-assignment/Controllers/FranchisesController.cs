@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using web_api_assignment.Models.DTOS.Franchises;
+using web_api_assignment.Models.DTOS.Movies;
 using web_api_assignment.Models.Entities;
 using web_api_assignment.Services.Franchises;
 using web_api_assignment.Utils;
@@ -16,38 +19,47 @@ namespace web_api_assignment.Controllers
     [ApiController]
     public class FranchisesController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IFranchiseService _franchiseService;
 
-        public FranchisesController(IFranchiseService franchiseService)
+        public FranchisesController(IMapper mapper, IFranchiseService franchiseService)
         {
+            _mapper = mapper;
             _franchiseService = franchiseService;
         }
 
         // GET: api/Franchises
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
+        public async Task<ActionResult<IEnumerable<FranchiseDto>>> GetFranchises()
         {
-            return Ok(await _franchiseService.GetAllAsync());
+            return Ok(_mapper.Map<List<FranchiseDto>>(await _franchiseService.GetAllAsync()));
         }
 
         // GET: api/Franchises/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Franchise>> GetFranchise(int id)
+        public async Task<ActionResult<FranchiseDto>> GetFranchise(int id)
         {
             try
             {
-                return Ok(await _franchiseService.GetByIdAsync(id));
+                return Ok(_mapper.Map<FranchiseDto>(await _franchiseService.GetByIdAsync(id)));
             }
             catch (EntityNotFoundException ex)
             {
-                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+                return NotFound(
+                    new ProblemDetails()
+                    {
+                        Detail = ex.Message,
+                        Status = ((int)HttpStatusCode.NotFound)
+                    }
+                    );
             }
+
         }
 
         // PUT: api/Franchises/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFranchise(int id, Franchise franchise)
+        public async Task<IActionResult> PutFranchise(int id, FranchisePutDto franchise)
         {
             if (id != franchise.Id)
             {
@@ -56,7 +68,7 @@ namespace web_api_assignment.Controllers
 
             try
             {
-                await _franchiseService.UpdateAsync(franchise);
+                await _franchiseService.UpdateAsync(_mapper.Map<Franchise>(franchise));
                 return NoContent();
 
             }
@@ -69,10 +81,12 @@ namespace web_api_assignment.Controllers
         // POST: api/Franchises
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
+        public async Task<IActionResult> PostFranchise(FranchisePostDto franchiseDto)
         {
+            Franchise franchise = _mapper.Map<Franchise>(franchiseDto);
             await _franchiseService.AddAsync(franchise);
             return CreatedAtAction("GetFranchise", new { id = franchise.Id }, franchise);
+
         }
 
         // DELETE: api/Franchises/5
@@ -91,15 +105,22 @@ namespace web_api_assignment.Controllers
         }
 
         [HttpGet("{id}/movies")]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesForFranchiseAsync(int id)
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetMoviesForFranchiseAsync(int id)
         {
             try
             {
-                return Ok(await _franchiseService.GetMoviesAsync(id));
+                return Ok(_mapper.Map<List<MovieDto>>(await _franchiseService.GetMoviesAsync(id)));
             }
             catch (EntityNotFoundException ex)
             {
-                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+                return NotFound(
+
+                    new ProblemDetails()
+                    {
+                        Detail = ex.Message,
+                        Status = ((int)HttpStatusCode.NotFound)
+                    }
+                    );
             }
         }
 
@@ -113,8 +134,15 @@ namespace web_api_assignment.Controllers
             }
             catch (EntityNotFoundException ex)
             {
-                return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
+                return NotFound(
+                    new ProblemDetails()
+                    {
+                        Detail = ex.Message,
+                        Status = ((int)HttpStatusCode.NotFound)
+                    }
+                    );
             }
+
         }
 
     }
