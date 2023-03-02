@@ -52,18 +52,15 @@ namespace web_api_assignment.Models.Entities
                 .HasMany(mov => mov.Characters)
                 .WithMany(chrs => chrs.Movies)
                 .UsingEntity(j =>
-                {
-                    j.ToTable("MovieCharacter");
-                    j.HasKey("MovieId", "CharacterId");
                     j.HasData(
-                        new { MovieId = 1, CharacterId = 1 },
-                        new { MovieId = 2, CharacterId = 1 },
-                        new { MovieId = 3, CharacterId = 1 },
-                        new { MovieId = 1, CharacterId = 2 },
-                        new { MovieId = 1, CharacterId = 3 },
-                        new { MovieId = 3, CharacterId = 3 }
-                    );
-                 });
+                        new { MoviesId = 1, CharactersId = 1 },
+                        new { MoviesId = 2, CharactersId = 1 },
+                        new { MoviesId = 3, CharactersId = 1 },
+                        new { MoviesId = 1, CharactersId = 2 },
+                        new { MoviesId = 1, CharactersId = 3 },
+                        new { MoviesId = 3, CharactersId = 3 }
+                    )
+                 );
         }
 
     }
