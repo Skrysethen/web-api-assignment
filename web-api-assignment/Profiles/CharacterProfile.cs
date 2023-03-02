@@ -10,11 +10,9 @@ namespace web_api_assignment.Profiles
         {
             CreateMap<CharacterPostDto, Character>();
             CreateMap<CharacterPutDto, Character>();
-
             CreateMap<Character, CharacterDto>()
                 .ForMember(dto => dto.Movies, opt => opt
                 .MapFrom(p => p.Movies.Select(s => s.Id).ToList()));
-
         }
     }
 }
