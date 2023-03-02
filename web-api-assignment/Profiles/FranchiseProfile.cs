@@ -1,21 +1,20 @@
 ﻿using AutoMapper;
+using web_api_assignment.Models.DTOS.Franchises;
+using web_api_assignment.Models.Entities;
 
 namespace web_api_assignment.Profiles
 {
-    public class FranchiseProfile: Profile
+    public class FranchiseProfile : Profile
     {
-        //public ProfessorProfile()
-        //{
-        //    CreateMap<ProfessorPostDto, Professor>();
+        public FranchiseProfile()
+        {
+            CreateMap<FranchisePostDto, Franchise>();
+            CreateMap<FranchisePutDto, Franchise>();
 
-        //    CreateMap<Professor, ProfessorDto>()
-        //        .ForMember(dto => dto.Students, opt => opt
-        //        .MapFrom(p => p.Students.Select(s => s.Id).ToList()))
-        //        .ForMember(dto => dto.Subjects, opt => opt
-        //        .MapFrom(p => p.Subjects.Select(s => s.Id).ToList()));
+            CreateMap<Franchise, FranchiseDto>()
+                    .ForMember(dto => dto.Movies, opt => opt
+                    .MapFrom(f => f.Movies.Select(m => m.Id).ToList()));
 
-        //    CreateMap<ProfessorPutDto, Professor>();
-        //}
-
+        }
     }
 }

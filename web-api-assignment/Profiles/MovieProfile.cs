@@ -1,18 +1,20 @@
-﻿namespace web_api_assignment.Profiles
+﻿using AutoMapper;
+using web_api_assignment.Models.DTOS.Movies;
+using web_api_assignment.Models.Entities;
+
+namespace web_api_assignment.Profiles
 {
-    public class MovieProfile
+    public class MovieProfile: Profile
     {
-        //public ProfessorProfile()
-        //{
-        //    CreateMap<ProfessorPostDto, Professor>();
+        public MovieProfile()
+        {
+            CreateMap<MoviePostDto, Movie>();
+            CreateMap<MoviePutDto, Movie>();
 
-        //    CreateMap<Professor, ProfessorDto>()
-        //        .ForMember(dto => dto.Students, opt => opt
-        //        .MapFrom(p => p.Students.Select(s => s.Id).ToList()))
-        //        .ForMember(dto => dto.Subjects, opt => opt
-        //        .MapFrom(p => p.Subjects.Select(s => s.Id).ToList()));
+            CreateMap<Movie, MovieDto>()
+                    .ForMember(dto => dto.Characters, opt => opt
+                    .MapFrom(m => m.Characters.Select(c => c.Id).ToList()));
 
-        //    CreateMap<ProfessorPutDto, Professor>();
-        //}
+        }
     }
 }

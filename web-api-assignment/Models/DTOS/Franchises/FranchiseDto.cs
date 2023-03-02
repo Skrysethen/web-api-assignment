@@ -3,7 +3,7 @@ using web_api_assignment.Models.Entities;
 
 namespace web_api_assignment.Models.DTOS.Franchises
 {
-    public class FranchiseDTO
+    public class FranchiseDto
     {
         public int Id { get; set; }
         [MaxLength(50)]
