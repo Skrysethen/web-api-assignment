@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace web_api_assignment.Models.Entities
 {
+    [Table("Movie")]
     public class Movie
     {
         public Movie()
@@ -18,9 +20,9 @@ namespace web_api_assignment.Models.Entities
         [MaxLength(100)]
         public string Director { get; set; } = null!;
         [MaxLength(300)]
-        public string PictureURL { get; set; } = null!;
+        public string? PictureURL { get; set; } = null!;
         [MaxLength(300)]
-        public string TrailerUrl { get; set; } = null!;
+        public string? TrailerUrl { get; set; } = null!;
 
         public int FranchiseId { get; set; }
         public Franchise Franchise { get; set; } = null!;

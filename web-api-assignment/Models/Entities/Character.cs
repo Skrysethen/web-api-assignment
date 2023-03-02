@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace web_api_assignment.Models.Entities
 {
+    [Table("Character")]
     public class Character
     {
+        
         public Character() 
         {
             Movies = new HashSet<Movie>();

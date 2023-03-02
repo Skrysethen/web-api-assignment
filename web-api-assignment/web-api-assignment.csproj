@@ -4,7 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>web_api_assignment</RootNamespace>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <NoWarn>$(NoWarn); 1591</NoWarn>
+	  <RootNamespace>web_api_assignment</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
