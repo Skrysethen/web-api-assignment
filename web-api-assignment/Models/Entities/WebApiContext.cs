@@ -56,12 +56,12 @@ namespace web_api_assignment.Models.Entities
                     j.ToTable("MovieCharacter");
                     j.HasKey("MovieId", "CharacterId");
                     j.HasData(
-                    new { MovieId = 1, CharacterId = 1 },
-                    new { MovieId = 2, CharacterId = 1 },
-                    new { MovieId = 3, CharacterId = 1 },
-                    new { MovieId = 1, CharacterId = 2 },
-                    new { MovieId = 1, CharacterId = 3 },
-                    new { MovieId = 3, CharacterId = 3 }
+                        new { MovieId = 1, CharacterId = 1 },
+                        new { MovieId = 2, CharacterId = 1 },
+                        new { MovieId = 3, CharacterId = 1 },
+                        new { MovieId = 1, CharacterId = 2 },
+                        new { MovieId = 1, CharacterId = 3 },
+                        new { MovieId = 3, CharacterId = 3 }
                     );
                  });
         }
