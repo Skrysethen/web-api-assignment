@@ -24,12 +24,12 @@ namespace web_api_assignment.Services.Characters
 
         public async Task<IEnumerable<Character>> GetAllAsync()
         {
-            return await _context.Characters.ToListAsync();
+            return await _context.Characters.Include(c => c.Movies).ToListAsync();
         }
 
         public async Task<Character> GetByIdAsync(int id)
         {
-            return await _context.Characters.FindAsync(id);
+            return await _context.Characters.Where(c => c.Id == id).Include(c => c.Movies).FirstAsync();
         }
 
         public async Task<ICollection<Movie>> GetMoviesAsync(int characterId)

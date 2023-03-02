@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using web_api_assignment.Models.DTOS;
 using web_api_assignment.Models.DTOS.Characters;
 using web_api_assignment.Models.Entities;
 

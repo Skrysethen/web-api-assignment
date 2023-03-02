@@ -12,7 +12,7 @@ using web_api_assignment.Utils;
 
 namespace web_api_assignment.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/franchise")]
     [ApiController]
     public class FranchisesController : ControllerBase
     {

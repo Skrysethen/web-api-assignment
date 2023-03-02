@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using web_api_assignment.Models;
+using web_api_assignment.Models.DTOS.Characters;
 using web_api_assignment.Models.Entities;
 using web_api_assignment.Services.Characters;
 
@@ -15,33 +18,39 @@ namespace web_api_assignment.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class CharactersController : ControllerBase
     {
-        private readonly WebApiContext _context;
         private readonly ICharacterService _characterService;
+        private readonly IMapper _mapper;
 
-        public CharactersController(ICharacterService characterService)
+        public CharactersController(IMapper mapper,ICharacterService characterService)
         {
             _characterService = characterService;
+            _mapper = mapper;
+
         }
 
         // GET: api/Characters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
+        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetCharacters()
         {
-            return Ok(await _characterService.GetAllAsync());
+            return Ok(_mapper.Map<CharacterDto>(
+                 await _characterService.GetAllAsync()
+                ));
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterDto>> GetCharacter(int id)
         {
-            var character = await _characterService.GetByIdAsync(id);
-
-            if (character == null)
+            try
             {
-                return NotFound();
+                return Ok(_mapper.Map<CharacterDto>(
+                    await _characterService.GetByIdAsync(id))
+                    );
+            } catch(Exception ex)
+            {
+                return NotFound(ex.Message);
             }
 
-            return character;
         }
 
         // PUT: api/Characters/5

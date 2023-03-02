@@ -91,8 +91,8 @@ namespace web_api_assignment.Controllers
             }
         }
 
-        [HttpGet("{id}/movies")]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetCharactersForMovieAsync(int id)
+        [HttpGet("{id}/character")]
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersForMovieAsync(int id)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace web_api_assignment.Controllers
             }
         }
 
-        [HttpPut("{id}/movies")]
+        [HttpPut("{id}/character")]
         public async Task<IActionResult> UpdateCharactersForMovieAsync(int[] characterIds, int id)
         {
             try
