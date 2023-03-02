@@ -14,7 +14,7 @@ namespace web_api_assignment.Services.Franchises
 
         public async Task<IEnumerable<Franchise>> GetAllAsync()
         {
-            return await _webApiContext.Franchises.ToListAsync();
+            return await _webApiContext.Franchises.Include(f => f.Movies).ToListAsync();
         }
 
         public async Task<Franchise> GetByIdAsync(int id)
