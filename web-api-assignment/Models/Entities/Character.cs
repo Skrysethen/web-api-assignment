@@ -4,6 +4,11 @@ namespace web_api_assignment.Models.Entities
 {
     public class Character
     {
+        public Character() 
+        {
+            Movies = new HashSet<Movie>();
+        }
+
         public int Id { get; set; }
         [MaxLength(100)]
         public string FullName { get; set; } = null!;
@@ -14,7 +19,7 @@ namespace web_api_assignment.Models.Entities
         [MaxLength(200)]
         public string? PictureUrl { get; set; }
 
-        public virtual ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
+        public virtual ICollection<Movie> Movies { get; set; }
         
     }
 }

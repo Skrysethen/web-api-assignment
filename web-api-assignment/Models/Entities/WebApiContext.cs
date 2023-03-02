@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using web_api_assignment.Models;
+using Microsoft.Extensions.Hosting;
+using System.Reflection.Emit;
+using web_api_assignment.Models.Entities;
 
 namespace web_api_assignment.Models.Entities
 {
@@ -15,8 +17,13 @@ namespace web_api_assignment.Models.Entities
         {
         }
 
+        public virtual DbSet<Franchise> Franchises { get; set; }
+        public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<Character> Characters { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             //Franchises
             builder.Entity<Franchise>().HasData(
                 new Franchise() { Id = 1, Name = "Batman", Description = "Nananana batman" },
@@ -37,36 +44,27 @@ namespace web_api_assignment.Models.Entities
                 new Movie() { Id = 2, MovieTitle = "Lord of the rings 3", Director = "Some dude", Genre = "Fantasy" },
                 new Movie() { Id = 3, MovieTitle = "Batman the dark knight", Director ="who knows", Genre = "Superhero"}
                 );
-                
-                
 
 
-            builder.Entity<Movie>()
+            //Seeding data to junktion table
+            builder
+                .Entity<Movie>()
                 .HasMany(mov => mov.Characters)
                 .WithMany(chrs => chrs.Movies)
-                .UsingEntity<Dictionary<string, object>>(
-                    "MovieCharacter",
-                    left => left.HasOne<Movie>().WithMany().HasForeignKey("MovieId"),
-                    right => right.HasOne<Character>().WithMany().HasForeignKey("CharacterId"),
-                    jt =>
-                    {
-                        jt.HasKey("MovieId", "CharacterId");
-                        jt.HasData(
-                            new { MovieId = 1, CharacterId = 3 },
-                            new { MovieId = 3, CharacterId = 1 },
-                            new { MovieId = 2, CharacterId = 2 },
-                            new { MovieId = 2, CharacterId = 3 },
-                            new { MovieId = 3, CharacterId = 2 }
-                            );
-                    }
-                );
-
+                .UsingEntity(j =>
+                {
+                    j.ToTable("MovieCharacter");
+                    j.HasKey("MovieId", "CharacterId");
+                    j.HasData(
+                    new { MovieId = 1, CharacterId = 1 },
+                    new { MovieId = 2, CharacterId = 1 },
+                    new { MovieId = 3, CharacterId = 1 },
+                    new { MovieId = 1, CharacterId = 2 },
+                    new { MovieId = 1, CharacterId = 3 },
+                    new { MovieId = 3, CharacterId = 3 }
+                    );
+                 });
         }
-
-        public virtual DbSet<Franchise> Franchises { get; set; }
-        public virtual DbSet<Movie> Movies { get; set; }
-
-        public virtual DbSet<Character> Characters { get; set; }
 
     }
 }
