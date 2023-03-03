@@ -55,7 +55,7 @@ namespace web_api_assignment.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(int id, Movie movie)
+        public async Task<IActionResult> PutMovie(int id, MoviePutDto movie)
         {
             if (id != movie.Id)
             {
@@ -64,7 +64,9 @@ namespace web_api_assignment.Controllers
 
             try
             {
-                await _movieService.UpdateAsync(movie);
+
+                await _movieService.UpdateAsync(
+                    _mapper.Map<Movie>(movie));
                 return NoContent();
 
             }
@@ -77,8 +79,9 @@ namespace web_api_assignment.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        public async Task<ActionResult<Movie>> PostMovie(MoviePostDto movieDto)
         {
+            Movie movie = _mapper.Map<Movie>(movieDto);
             await _movieService.AddAsync(movie);
             return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
