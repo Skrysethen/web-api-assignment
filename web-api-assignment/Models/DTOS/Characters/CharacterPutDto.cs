@@ -1,4 +1,6 @@
-﻿namespace web_api_assignment.Models.DTOS.Characters
+﻿using web_api_assignment.Models.Entities;
+
+namespace web_api_assignment.Models.DTOS.Characters
 {
     public class CharacterPutDto
     {
