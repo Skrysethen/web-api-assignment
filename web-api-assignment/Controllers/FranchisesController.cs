@@ -16,6 +16,11 @@ using web_api_assignment.Utils;
 
 namespace web_api_assignment.Controllers
 {
+    /// <summary>
+    /// Controller for franchises that uses the franchise service
+    /// Uses automapper to implement DTO mapping 
+    /// </summary>
+
     [Route("api/v1/franchise")]
     [ApiController]
     public class FranchisesController : ControllerBase
@@ -23,20 +28,28 @@ namespace web_api_assignment.Controllers
         private readonly IMapper _mapper;
         private readonly IFranchiseService _franchiseService;
 
+        //Constructor
         public FranchisesController(IMapper mapper, IFranchiseService franchiseService)
         {
             _mapper = mapper;
             _franchiseService = franchiseService;
         }
 
-        // GET: api/Franchises
+        /// <summary>
+        /// Get all franchises from the database.
+        /// </summary>
+        /// <returns>List of FranchiseDtos</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FranchiseDto>>> GetFranchises()
         {
             return Ok(_mapper.Map<List<FranchiseDto>>(await _franchiseService.GetAllAsync()));
         }
 
-        // GET: api/Franchises/5
+        /// <summary>
+        /// Get a single franchise, based on its Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>One FranchiseDto</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<FranchiseDto>> GetFranchise(int id)
         {
@@ -57,8 +70,12 @@ namespace web_api_assignment.Controllers
 
         }
 
-        // PUT: api/Franchises/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Update a single franchise with new values based on Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="franchise"></param>
+        /// <returns>Returns NoContent if update is successful</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, FranchisePutDto franchise)
         {
@@ -79,8 +96,11 @@ namespace web_api_assignment.Controllers
             }
         }
 
-        // POST: api/Franchises
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Post a new franchise object to the databse
+        /// </summary>
+        /// <param name="franchiseDto"></param>
+        /// <returns>The newly created franchise</returns>
         [HttpPost]
         public async Task<IActionResult> PostFranchise(FranchisePostDto franchiseDto)
         {
@@ -90,7 +110,10 @@ namespace web_api_assignment.Controllers
 
         }
 
-        // DELETE: api/Franchises/5
+        /// <summary>
+        /// Delete a franchise based on Id
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
@@ -104,6 +127,13 @@ namespace web_api_assignment.Controllers
                 return NotFound(new ProblemDetails(){Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound)});
             }
         }
+
+        /// <summary>
+        /// Get all movies that has belongs to a franchise.
+        /// A movie belongs to a franchise when its foreign key franchiseId is equal to the Id of the franchise
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns a list of movieDtos</returns>
 
         [HttpGet("{id}/movies")]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetMoviesForFranchiseAsync(int id)
@@ -125,6 +155,11 @@ namespace web_api_assignment.Controllers
             }
         }
 
+        /// <summary>
+        /// Update the movies in a franchise with Id equal to id, based on the list of movie ids. 
+        /// </summary>
+        /// <param name="movieIds"></param>
+        /// <param name="id"></param>
         [HttpPut("{id}/movies")]
         public async Task<IActionResult> UpdateMoviesForFranchisesAsync(int[] movieIds, int id)
         {
@@ -146,6 +181,11 @@ namespace web_api_assignment.Controllers
 
         }
 
+        /// <summary>
+        /// Get all characters that are in movies that belong to the franchise with Id equal to id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List of characterDto</returns>
         [HttpGet("{id}/character")]
         public async Task<ActionResult<IEnumerable<CharacterDto>>> GetCharactersForFranchiseAsync(int id)
         {

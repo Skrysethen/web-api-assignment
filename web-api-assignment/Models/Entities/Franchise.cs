@@ -6,6 +6,9 @@ namespace web_api_assignment.Models.Entities
     [Table("Franchise")]
     public partial class Franchise
     {
+        /// <summary>
+        /// Franchise entity. Contains a collection of movie objects
+        /// </summary>
         public int Id { get; set; }
         [MaxLength(50)]
         public string Name { get; set; } = null!;
