@@ -7,5 +7,6 @@ namespace web_api_assignment.Models.DTOS.Movies
         public string MovieTitle { get; set; } = null!;
         public int ReleaseYear { get; set; }
         public string Director { get; set; } = null!;
+        public int FranchiseId { get; set; }
     }
 }
