@@ -145,5 +145,18 @@ namespace web_api_assignment.Controllers
 
         }
 
+        [HttpGet("{id}/character")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetCharactersForFranchiseAsync(int id)
+        {
+            try
+            {
+                return Ok(await _franchiseService.GetCharactersAsync(id));
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails() { Detail = ex.Message, Status = ((int)HttpStatusCode.NotFound) });
+            }
+        }
+
     }
 }

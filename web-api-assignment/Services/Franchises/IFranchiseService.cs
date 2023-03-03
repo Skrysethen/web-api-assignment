@@ -8,6 +8,6 @@ namespace web_api_assignment.Services.Franchises
         Task<ICollection<Movie>> GetMoviesAsync(int franchiseId);
         Task UpdateMoviesAsync(int[] movieIds, int franchiseId);
         Task<ICollection<Character>> GetCharactersAsync(int franchiseId);
-        Task UpdateCharactersAsync(int[] characterIds, int franchiseId);
+
     }
 }
