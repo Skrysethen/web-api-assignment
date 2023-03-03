@@ -7,8 +7,10 @@ Microsoft.EntityFrameworkCore.SqlServer <br />
 Microsoft.EntityFrameworkCore.Tools <br />
 
 ## Usage
+Following operations are supported by the API:
 ![image](https://user-images.githubusercontent.com/122644940/222709459-f63981e7-0c00-4992-8eaa-4c105fe65456.png)
-
+![image](https://user-images.githubusercontent.com/122644940/222709694-956f88b8-9ce5-4426-a7e0-9c60324c8324.png)
+![image](https://user-images.githubusercontent.com/122644940/222709748-153d5896-de56-4854-a293-c34d82f30a98.png)
 
 
 ## Authors
