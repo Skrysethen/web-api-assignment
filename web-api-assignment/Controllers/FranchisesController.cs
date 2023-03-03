@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using web_api_assignment.Models.DTOS.Characters;
 using web_api_assignment.Models.DTOS.Franchises;
 using web_api_assignment.Models.DTOS.Movies;
 using web_api_assignment.Models.Entities;
@@ -146,11 +147,11 @@ namespace web_api_assignment.Controllers
         }
 
         [HttpGet("{id}/character")]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetCharactersForFranchiseAsync(int id)
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersForFranchiseAsync(int id)
         {
             try
             {
-                return Ok(await _franchiseService.GetCharactersAsync(id));
+                return Ok(_mapper.Map<List<CharacterDto>>(await _franchiseService.GetCharactersAsync(id)));
             }
             catch (EntityNotFoundException ex)
             {
