@@ -1,4 +1,6 @@
 # web-api-assignment
+web-api-assignment is a simple application that creates the Muuuvie API, which accesses a movie database. Movies can belong to a franchise, and include a set of characters. The application is written in C# and uses n Entity Framework Core.
+
 ## Installation
 For the application to work, the following packages should be installed using NuGet package manager:<br />
 AutoMapper<br />
