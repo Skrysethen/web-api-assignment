@@ -32,14 +32,14 @@ namespace web_api_assignment.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
         {
             return Ok( _mapper.Map<List<MovieDto>>(await _movieService.GetAllAsync()));
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Movie>> GetMovie(int id)
+        public async Task<ActionResult<MovieDto>> GetMovie(int id)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace web_api_assignment.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(MoviePostDto movieDto)
+        public async Task<ActionResult> PostMovie(MoviePostDto movieDto)
         {
             Movie movie = _mapper.Map<Movie>(movieDto);
             await _movieService.AddAsync(movie);
