@@ -12,7 +12,11 @@ namespace web_api_assignment.Services.Characters
         private readonly WebApiContext _webApiContext;
         private readonly ILogger<CharacterServiceImpl> _logger;
 
-        public CharacterServiceImpl(WebApiContext context) { _webApiContext = context; }
+        public CharacterServiceImpl(WebApiContext context, ILogger<CharacterServiceImpl> logger) 
+        { 
+            _webApiContext = context;
+            _logger = logger;
+        }
         public async Task AddAsync(Character entity)
         {
             await _webApiContext.Characters.AddAsync(entity);
