@@ -111,7 +111,7 @@ namespace web_api_assignment.Controllers
         {
             Character character = _mapper.Map<Character>(characterDto);
             await _characterService.AddAsync(character);
-            return CreatedAtAction("GetProfessor", new { id = character.Id }, character);
+            return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
 
         }
 
