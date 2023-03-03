@@ -51,6 +51,14 @@ builder.Services.AddScoped<IMovieService, MovieServiceImpl>();
 // Add automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+//Adding logger to the program cs file
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
