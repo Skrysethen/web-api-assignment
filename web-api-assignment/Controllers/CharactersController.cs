@@ -20,9 +20,15 @@ namespace web_api_assignment.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class CharactersController : ControllerBase
     {
+        /// <summary>
+        /// Controller for characters that uses the character service
+        /// Uses automapper to implement DTO mapping 
+        /// </summary>
+
         private readonly ICharacterService _characterService;
         private readonly IMapper _mapper;
 
+        //Constructor
         public CharactersController(IMapper mapper,ICharacterService characterService)
         {
             _characterService = characterService;
@@ -30,14 +36,21 @@ namespace web_api_assignment.Controllers
 
         }
 
-        // GET: api/Characters
+        /// <summary>
+        /// Get all characters from the database.
+        /// </summary>
+        /// <returns>List of CharacterDtos</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterDto>>> GetCharacters()
         {
             return Ok(_mapper.Map<List<CharacterDto>>( await _characterService.GetAllAsync() ));
         }
 
-        // GET: api/Characters/5
+        /// <summary>
+        /// Get a single character, based on its Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>One CharacterDto</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterDto>> GetCharacter(int id)
         {
@@ -53,8 +66,12 @@ namespace web_api_assignment.Controllers
 
         }
 
-        // PUT: api/Characters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Update a single character with new values based on Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="character"></param>
+        /// <returns>Returns NoContent if update is successful</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, CharacterPutDto character)
         {
@@ -84,8 +101,11 @@ namespace web_api_assignment.Controllers
 
         }
 
-        // POST: api/Characters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Post a new character object to the databse
+        /// </summary>
+        /// <param name="characterDto"></param>
+        /// <returns>The newly created character</returns>
         [HttpPost]
         public async Task<IActionResult> PostCharacter(CharacterPostDto characterDto)
         {

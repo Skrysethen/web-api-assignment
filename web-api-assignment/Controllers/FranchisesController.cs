@@ -156,7 +156,7 @@ namespace web_api_assignment.Controllers
         }
 
         /// <summary>
-        /// Update the movies in a franchise with Id equal to id, based on the list of movie ids. 
+        /// Update the list of movies in a franchise with Id equal to id, based on the list of movie ids. 
         /// </summary>
         /// <param name="movieIds"></param>
         /// <param name="id"></param>
