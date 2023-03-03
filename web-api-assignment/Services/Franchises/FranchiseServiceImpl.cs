@@ -63,14 +63,17 @@ namespace web_api_assignment.Services.Franchises
             await _webApiContext.SaveChangesAsync();
         }
 
-        public Task<ICollection<Character>> GetCharactersAsync(int franchiseId)
+        public async Task<ICollection<Character>> GetCharactersAsync(int franchiseId)
         {
-            throw new NotImplementedException();
+            List<Movie> movies = await _webApiContext.Movies.Include(m => m.Characters).Where(f => f.FranchiseId == franchiseId).ToListAsync();
+            List<Character> characters = new List<Character>();
+            foreach(Movie movie in movies)
+            {
+                characters.AddRange(movie.Characters.ToList());
+            }
+
+            return characters.Distinct().ToList();
         }
 
-        public Task UpdateCharactersAsync(int[] characterIds, int franchiseId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
