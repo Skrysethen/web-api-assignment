@@ -20,6 +20,7 @@ namespace web_api_assignment.Services.Franchises
         public async Task<Franchise> GetByIdAsync(int id)
         {
             return await _webApiContext.Franchises
+                .Where(f => f.Id == id)
                 .Include(f => f.Movies)
                 .FirstAsync();
         }

@@ -11,5 +11,6 @@ namespace web_api_assignment.Models.DTOS.Movies
         public string Director { get; set; } = null!;
         public string PictureURL { get; set; } = null!;
         public string TrailerUrl { get; set; } = null!;
+        public int FranchiseId { get; set; }
     }
 }

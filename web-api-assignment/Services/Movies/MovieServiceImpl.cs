@@ -25,6 +25,7 @@ namespace web_api_assignment.Services.Movies
         public async Task<Movie> GetByIdAsync(int id)
         {
             return await _webApiContext.Movies
+                .Where(c => c.Id == id)
                 .Include(m => m.Franchise)
                 .Include(m => m.Characters)
                 .FirstAsync();
