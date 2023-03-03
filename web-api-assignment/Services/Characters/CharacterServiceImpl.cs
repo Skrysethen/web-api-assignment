@@ -71,7 +71,7 @@ namespace web_api_assignment.Services.Characters
         {
             if (!await CharacterExists(entity.Id))
             {
-                _logger.LogError("Character not found with Id: " + id);
+                _logger.LogError("Character not found with Id: " + entity.Id);
                 throw new EntityNotFoundException();
             }
             _webApiContext.Entry(entity).State = EntityState.Modified;

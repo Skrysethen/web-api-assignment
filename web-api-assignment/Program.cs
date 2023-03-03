@@ -44,9 +44,9 @@ builder.Services.AddDbContext<WebApiContext>(
     );
 
 
-builder.Services.AddScoped<IFranchiseService, FranchiseServiceImpl>();
+builder.Services.AddTransient<IFranchiseService, FranchiseServiceImpl>();
 builder.Services.AddTransient<ICharacterService, CharacterServiceImpl>();
-builder.Services.AddScoped<IMovieService, MovieServiceImpl>();
+builder.Services.AddTransient<IMovieService, MovieServiceImpl>();
 
 // Add automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
