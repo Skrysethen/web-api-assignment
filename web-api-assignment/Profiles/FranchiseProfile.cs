@@ -6,6 +6,10 @@ namespace web_api_assignment.Profiles
 {
     public class FranchiseProfile : Profile
     {
+        /// <summary>
+        /// Profile for mapping entities to dtos
+        /// Used for mapping
+        /// </summary>
         public FranchiseProfile()
         {
             CreateMap<FranchisePostDto, Franchise>();

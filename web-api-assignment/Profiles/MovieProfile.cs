@@ -6,6 +6,10 @@ namespace web_api_assignment.Profiles
 {
     public class MovieProfile: Profile
     {
+        /// <summary>
+        /// Profile for mapping entities to dtos
+        /// Used for mapping
+        /// </summary>
         public MovieProfile()
         {
             CreateMap<MoviePostDto, Movie>();

@@ -6,6 +6,10 @@ namespace web_api_assignment.Profiles
 {
     public class CharacterProfile : Profile
     {
+        /// <summary>
+        /// Profile for mapping entities to dtos
+        /// Used for mapping
+        /// </summary>
         public CharacterProfile() 
         {
             CreateMap<CharacterPostDto, Character>();
