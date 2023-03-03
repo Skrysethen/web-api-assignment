@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using web_api_assignment.Models.DTOS.Characters;
+using web_api_assignment.Models.DTOS.Movies;
 using web_api_assignment.Models.Entities;
+using web_api_assignment.Services.Characters;
 using web_api_assignment.Services.Franchises;
 using web_api_assignment.Services.Movies;
 using web_api_assignment.Utils;
@@ -18,17 +22,19 @@ namespace web_api_assignment.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
+        private readonly IMapper _mapper;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMovieService movieService, IMapper mapper)
         {
             _movieService = movieService;
+            _mapper = mapper;
         }
 
         // GET: api/Movies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
-            return Ok(await _movieService.GetAllAsync());
+            return Ok( _mapper.Map<List<MovieDto>>(await _movieService.GetAllAsync()));
         }
 
         // GET: api/Movies/5
@@ -37,7 +43,8 @@ namespace web_api_assignment.Controllers
         {
             try
             {
-                return Ok(await _movieService.GetByIdAsync(id));
+                return Ok(_mapper.Map<MovieDto>(
+                    await _movieService.GetByIdAsync(id)));
             }
             catch (EntityNotFoundException ex)
             {
@@ -48,7 +55,7 @@ namespace web_api_assignment.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(int id, Movie movie)
+        public async Task<IActionResult> PutMovie(int id, MoviePutDto movie)
         {
             if (id != movie.Id)
             {
@@ -57,7 +64,9 @@ namespace web_api_assignment.Controllers
 
             try
             {
-                await _movieService.UpdateAsync(movie);
+
+                await _movieService.UpdateAsync(
+                    _mapper.Map<Movie>(movie));
                 return NoContent();
 
             }
@@ -70,8 +79,9 @@ namespace web_api_assignment.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        public async Task<ActionResult<Movie>> PostMovie(MoviePostDto movieDto)
         {
+            Movie movie = _mapper.Map<Movie>(movieDto);
             await _movieService.AddAsync(movie);
             return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
@@ -91,12 +101,13 @@ namespace web_api_assignment.Controllers
             }
         }
 
-        [HttpGet("{id}/character")]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersForMovieAsync(int id)
+        [HttpGet("{id}/characters")]
+        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetCharactersForMovieAsync(int id)
         {
             try
             {
-                return Ok(await _movieService.GetCharactersAsync(id));
+                return Ok(_mapper.Map<List<CharacterDto>>(await _movieService.GetCharactersAsync(id)));
+                
             }
             catch (EntityNotFoundException ex)
             {
