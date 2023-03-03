@@ -6,7 +6,9 @@ namespace web_api_assignment.Models.Entities
     [Table("Character")]
     public class Character
     {
-        
+        /// <summary>
+        /// Character entity. Includes a collection of movie objects
+        /// </summary>
         public Character() 
         {
             Movies = new HashSet<Movie>();

@@ -6,6 +6,10 @@ namespace web_api_assignment.Models.Entities
     [Table("Movie")]
     public class Movie
     {
+        /// <summary>
+        /// Movie entity.
+        /// Has a foreign key franchiseId that refers to a franchise, and a collection of character objects
+        /// </summary>
         public Movie()
         {
             Characters = new HashSet<Character>();
