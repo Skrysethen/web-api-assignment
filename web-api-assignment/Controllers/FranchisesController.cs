@@ -147,7 +147,7 @@ namespace web_api_assignment.Controllers
         }
 
         [HttpGet("{id}/character")]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersForFranchiseAsync(int id)
+        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetCharactersForFranchiseAsync(int id)
         {
             try
             {
